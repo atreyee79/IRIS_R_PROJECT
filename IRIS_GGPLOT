@@ -1,0 +1,100 @@
+
+install.packages('ggplot2')
+
+# Exercises for ggplot
+
+library(ggplot2)
+?iris
+names(iris)
+head(iris)
+
+df=as.data.frame(iris)
+df
+
+# Exercise 1
+# Plot density chart for column Sepal Width of Iris Dataset. Hint : density().
+# 
+ggplot(df,aes(x=Sepal.Width))+
+  geom_density()+labs(title='Density Chart of Sepal.Width')
+
+
+# Exercise 2
+# Compare Sepal.Length with Sepal.Width. Also apply Color format wrt Species
+# Hint : point().
+# 
+
+
+ggplot(df,aes(x=Sepal.Length,y=Sepal.Width,color=Species))+
+  geom_point(fill=rainbow(1))
+
+
+
+
+
+# Exercise 3
+# This time you have to make bar chart for Species. Also try to fill it with unique colors
+# Hint : bar().
+# 
+
+
+ggplot(df,aes(x=Species))+
+  geom_bar(fill=c('red','yellow','green'))
+
+# Exercise 4
+# You Nailed it till now.
+# This time, create object 'df' and save "iris" dataset to it.
+# Assuming flowers dimensions are square in shape, you have to find area of sepal (lentgh * breadth) and petal(lentgh * breadth).
+# Then compare the areas and use color option to differentiate wrt 'Species'
+# Add title, ylab, xlab.
+# Hint : mutate funtion of dplyr and bar.
+# 
+
+names(df)
+library(dplyr)
+df1=mutate(df,Area_S=Sepal.Length*Sepal.Width,Area_p=Petal.Length*Petal.Width)
+df1
+
+
+ggplot(df1,aes(x=Area_S,y=Area_p))+
+  geom_line(col='red')+
+  labs(title = 'Compare Area of Sepals and Petals',
+                  Ylabs='Area of Petal',
+                  Xlabs="Area of Sepals")
+
+
+Area_Se=df$Sepal.Length*df$Sepal.Width
+Area_pe=df$Petal.Length*df$Petal.Width                  
+
+plot(x=Area_Se,y=Area_pe,type='p',
+     main = 'Compare Area of Sepals and Petals',
+     ylabs='Area of Petal',
+     xlabs="Area of Sepals")
+
+
+
+#to make a pdf file
+
+getwd()
+setwd("D:\\RNITISH")
+
+
+
+pdf("iris Charts.pdf")
+
+ggplot(df,aes(x=Sepal.Width))+
+  geom_density()+labs(title='Density Chart of Sepal.Width')
+ggplot(df,aes(x=Sepal.Length,y=Sepal.Width,color=Species))+
+  geom_point(fill=rainbow(1))
+
+
+ggplot(df,aes(x=Species))+
+  geom_bar(fill=c('red','yellow','green'))
+
+ggplot(df1,aes(x=Area_S,y=Area_p))+
+  geom_line(col='red')+
+  labs(title = 'Compare Area of Sepals and Petals',
+       Ylabs='Area of Petal',
+       Xlabs="Area of Sepals")
+
+dev.off
+
